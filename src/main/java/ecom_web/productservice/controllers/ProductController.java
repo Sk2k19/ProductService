@@ -1,10 +1,13 @@
 package ecom_web.productservice.controllers;
 
+import ecom_web.productservice.exceptions.CategoryNotFoundException;
 import ecom_web.productservice.exceptions.ProductNotFoundException;
 import ecom_web.productservice.models.Product;
 import ecom_web.productservice.services.ProductService;
 import lombok.Getter;
 import lombok.Setter;
+import lombok.extern.slf4j.Slf4j;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -12,6 +15,7 @@ import org.springframework.web.bind.annotation.*;
 import java.util.ArrayList;
 import java.util.List;
 
+@Slf4j
 @Getter
 @Setter
 @RestController
@@ -19,7 +23,7 @@ import java.util.List;
 public class ProductController {
     ProductService productService;
 
-    public ProductController(ProductService productService) {
+    public ProductController(@Qualifier("productServiceDBImplementation")ProductService productService) {
         this.productService = productService;
 
     }
@@ -40,8 +44,9 @@ public class ProductController {
     }
 
     @PostMapping
-    public Product createProduct(@RequestBody Product product) {
-        return new Product();
+    public Product createProduct(@RequestBody Product product) throws CategoryNotFoundException {
+
+        return productService.createProduct(product);
     }
 
     @DeleteMapping("/{id}")
@@ -55,8 +60,8 @@ public class ProductController {
 
     }
     @PatchMapping("/{id}")
-    public Product patialUpdateProduct(@PathVariable("id") Long productId,@RequestBody Product product) {
-        return new Product();
+    public Product partialUpdateProduct(@PathVariable("id") Long productId,@RequestBody Product product) {
+        return productService.partialUpdateProduct(productId,product);
 
     }
 }

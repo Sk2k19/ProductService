@@ -3,6 +3,7 @@ package ecom_web.productservice.services;
 import ecom_web.productservice.dtos.FakeStoreProductDto;
 import ecom_web.productservice.models.Category;
 import ecom_web.productservice.models.Product;
+import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 import org.springframework.web.client.RestTemplate;
 
@@ -10,7 +11,7 @@ import javax.swing.*;
 import java.util.ArrayList;
 import java.util.List;
 
-@Service
+@Service("fakeStoreProductService")
 public class FakeStoreProductService implements ProductService {
     RestTemplate restTemplate;
     public FakeStoreProductService(RestTemplate restTemplate) {
@@ -49,7 +50,8 @@ public class FakeStoreProductService implements ProductService {
         // convert from FakeStoreProductDto to Product
         // return Product
         FakeStoreProductDto fakeStoreProductDto = convertInToFakeStoreProductDto(product);
-         FakeStoreProductDto fakeStoreProductDto1 = restTemplate.postForObject("https://fakestoreapi.com/products",
+         FakeStoreProductDto fakeStoreProductDto1 = restTemplate.postForObject(
+                 "https://fakestoreapi.com/products",
                 fakeStoreProductDto,
                 FakeStoreProductDto.class);
 
@@ -65,18 +67,13 @@ public class FakeStoreProductService implements ProductService {
 
     @Override
     public Product updateProduct(Long productId, Product product) {
-        //check if product exists
-        // convert from Product to FakeStoreProductDto
-        // send to 3rd party API
-        // get back from that API
-        // convert from FakeStoreProductDto to Product
-//      restTemplate.exchange("https://fakestoreapi.com/products/" + productId,
-//                "PUT",
+
         return null;
     }
 
     @Override
     public Product partialUpdateProduct(Long productId, Product product) {
+
         return null;
     }
     public Product convertInToProduct(FakeStoreProductDto fakeStoreProductDto) {
