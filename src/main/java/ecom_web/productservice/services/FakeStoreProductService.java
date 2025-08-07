@@ -31,10 +31,10 @@ public class FakeStoreProductService implements ProductService {
     }
 
     @Override
-    public List<Product> getAllProducts() {
+    public ArrayList<Product> getAllProducts() {
         FakeStoreProductDto fakeStoreProductDto[] = restTemplate.getForObject(
                 "https://fakestoreapi.com/products",FakeStoreProductDto[].class);
-        List<Product> products = new ArrayList<>();
+        ArrayList<Product> products = new ArrayList<>();
         for(FakeStoreProductDto fakeStoreProductDto1 : fakeStoreProductDto) {
             products.add(convertInToProduct(fakeStoreProductDto1));
 

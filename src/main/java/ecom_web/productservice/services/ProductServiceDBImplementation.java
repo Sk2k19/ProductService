@@ -5,14 +5,17 @@ import ecom_web.productservice.models.Category;
 import ecom_web.productservice.models.Product;
 import ecom_web.productservice.repositories.CategoryRepository;
 import ecom_web.productservice.repositories.PorductRepository;
+import org.springframework.context.annotation.Primary;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
 @Service("productServiceDBImplementation")
+@Primary
 public class ProductServiceDBImplementation implements ProductService {
 
     CategoryRepository categoryRepository;
@@ -66,8 +69,11 @@ public class ProductServiceDBImplementation implements ProductService {
 
     @Override
     public void deleteProduct(Long productId) {
-
-                productRepository.deleteById(productId);
+        Optional<Product> optProduct = productRepository.findById(productId); // check if product exists
+        if(optProduct.isEmpty()){
+            throw new RuntimeException("Product with id " + productId + " not found");
+        }
+        productRepository.deleteById(productId);
 
     }
 

@@ -29,13 +29,13 @@ public class ProductController {
     }
     // localhost:8080/products
     @GetMapping("/{id}")
-    public ResponseEntity<Product> getProduct(@PathVariable("id") Long productId)throws ProductNotFoundException {
+    public Product getProduct(@PathVariable("id") Long productId)throws ProductNotFoundException {
 
-            return new ResponseEntity<Product>(
-                    productService.getProduct(productId),
-                    HttpStatus.OK
-            );
-
+//            return new ResponseEntity<Product>(
+//                    productService.getProduct(productId),
+//                    HttpStatus.OK
+//            );
+                return productService.getProduct(productId);
     }
 
     @GetMapping
